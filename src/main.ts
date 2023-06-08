@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import './style.css'
-import App from './App.vue'
+import FrontendLayout from './layouts/DefaultLayout.vue'
+import { router } from './ts/CreateRoute.js'
 
-createApp(App).mount('#app')
+createApp(FrontendLayout).use(router).mount('#app')
