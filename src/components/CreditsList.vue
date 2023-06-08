@@ -7,13 +7,16 @@ import TableTr from './includes/TableTr.vue'
 const credits = ref([])
 const error = ref(null)
 
-const getCredits = async () => {
-  const response = await axios.get(`${NODEJS_ENDPOINT}/credits`)
-  if (response.data.count > 0) {
+const getCredits = () => {
+  axios.get(`${NODEJS_ENDPOINT}/credits`)
+  .then(response => {
+    if (response.data.count > 0) {
     credits.value = response.data.credits
-  } else {
-    error.value = 'Error getting credits list.'
-  }
+    }
+  })
+  .catch(error => {
+    error.value = error
+  })
 }
 
 onMounted(() => {
@@ -23,7 +26,8 @@ onMounted(() => {
 <template>
   <div class="mt-4 bg-white min-h-screen">
     <div class="overflow-x-auto relative mb-2 w-full md:w-2/4 mx-auto">
-        <table class="my-6 w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <h1 class="text-xl font-medium mb-4 mt-4">List of Credits</h1>
+        <table v-if="Object.keys(credits).length" class="my-6 w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-1 md:px-6">Customer Name</th>
@@ -36,6 +40,7 @@ onMounted(() => {
                 <TableTr v-for="(credit, index) in credits" :item="credit" :key="index" />
             </tbody>
         </table>
+        <div v-else>No credits currently active.</div>
     </div>
   </div>
 </template>
