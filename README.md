@@ -1,2 +1,2 @@
 # credit-ms-fe
-Credit Management system with Angular, TypeScript and TailwindCSS
+Credit Management system with Vue 3, TSS, Vite and TailwindCSS
